@@ -17,12 +17,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="28">
 
+        <!-- Tela de Login (ponto de entrada do app) -->
         <activity
-            android:name=".HomeActivity"
-            android:exported="false" />
-
-        <activity
-            android:name=".MainActivity"
+            android:name=".LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -30,6 +27,21 @@
             </intent-filter>
         </activity>
 
+        <!-- Tela de Cadastro -->
+        <activity
+            android:name=".CadastroActivity"
+            android:exported="false" />
+
+        <!-- Tela Principal (Home) -->
+        <activity
+            android:name=".HomeActivity"
+            android:exported="false" />
+
+        <!-- MainActivity mantida como fallback (já não é o launcher) -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="false" />
+
     </application>
 
-</manifest>
+</manifest>

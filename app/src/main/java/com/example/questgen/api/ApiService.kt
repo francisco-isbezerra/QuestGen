@@ -1,7 +1,10 @@
 package com.example.questgen.api
 
 import retrofit2.Call
+import retrofit2.http.Field
+import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.Query
 
 interface ApiService {
@@ -31,4 +34,17 @@ interface ApiService {
      */
     @GET("ranking.php")
     fun getRanking(): Call<List<RankingResponse>>
+
+    /**
+     * Cadastra um novo usuário.
+     * Exemplo: POST cadastro.php com campos nome, email e senha (form-encoded).
+     * Retorna JSON: { "status": "Sucesso"|"Erro", "mensagem": "..." }
+     */
+    @FormUrlEncoded
+    @POST("cadastro.php")
+    fun cadastrarUsuario(
+        @Field("nome")  nome: String,
+        @Field("email") email: String,
+        @Field("senha") senha: String
+    ): Call<CadastroResponse>
 }
