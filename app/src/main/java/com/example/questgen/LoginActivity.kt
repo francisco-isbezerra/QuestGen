@@ -2,6 +2,7 @@ package com.example.questgen
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Patterns
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.example.questgen.api.LoginResponse
@@ -20,26 +21,21 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Clique no botão "ENTRAR"
-        binding.btnEntrar.setOnClickListener {
-            realizarLogin()
-        }
-
-        // Link "Cadastre-se aqui" → abre CadastroActivity
+        binding.btnEntrar.setOnClickListener   { realizarLogin() }
         binding.tvCadastreSe.setOnClickListener {
             startActivity(Intent(this, CadastroActivity::class.java))
         }
     }
 
-    // ──────────────────────────────────────────
-    // Valida campos e chama login.php via Retrofit
-    // ──────────────────────────────────────────
+    // ──────────────────────────────────────────────────
+    // Valida campos localmente e dispara POST login.php
+    // ──────────────────────────────────────────────────
     private fun realizarLogin() {
         val email = binding.etEmail.text.toString().trim()
         val senha = binding.etSenha.text.toString()
 
-        // Validações locais
-        if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+        // Validações no cliente antes de ir à rede
+        if (email.isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             mostrarErro("Por favor, insira um e-mail válido.")
             return
         }
@@ -51,42 +47,71 @@ class LoginActivity : AppCompatActivity() {
         mostrarLoading(true)
         esconderErro()
 
-        // ⚠️ Adapte a chamada conforme sua lógica de login no backend.
-        // Atualmente o getUsuario usa apenas ID; quando o backend de login
-        // por e-mail/senha estiver pronto, troque pela rota correspondente.
-        // Por enquanto usamos ID=1 como stub para não bloquear a navegação.
-        RetrofitClient.instance.getUsuario(1)
+        // POST login.php com email e senha via @FormUrlEncoded
+        RetrofitClient.instance.login(email, senha)
             .enqueue(object : Callback<LoginResponse> {
+
                 override fun onResponse(
                     call: Call<LoginResponse>,
                     response: Response<LoginResponse>
                 ) {
                     mostrarLoading(false)
-                    if (response.isSuccessful && response.body() != null) {
-                        val usuario = response.body()!!
-                        val intent = Intent(this@LoginActivity, HomeActivity::class.java).apply {
-                            putExtra("usuario_id",   usuario.usuarioId)
-                            putExtra("usuario_nome",  usuario.usuarioNome)
-                            putExtra("usuario_email", usuario.usuarioEmail)
-                            putExtra("game_coins",    usuario.gameCoins)
-                        }
-                        startActivity(intent)
-                        finish()
-                    } else {
-                        mostrarErro("E-mail ou senha incorretos.")
+
+                    if (!response.isSuccessful) {
+                        mostrarErro("Erro do servidor: ${response.code()}. Tente novamente.")
+                        return
                     }
+
+                    val resposta = response.body()
+
+                    // Resposta nula ou corpo inválido
+                    if (resposta == null) {
+                        mostrarErro("Resposta inesperada do servidor.")
+                        return
+                    }
+
+                    // Servidor retornou Erro (ex: senha incorreta, usuário não existe)
+                    if (resposta.status.equals("Erro", ignoreCase = true)) {
+                        mostrarErro(resposta.mensagem)
+                        return
+                    }
+
+                    // ✅ Login bem-sucedido — extrai os dados e navega
+                    val usuarioId    = resposta.usuarioId   ?: 0
+                    val usuarioNome  = resposta.usuarioNome  ?: ""
+                    val usuarioEmail = resposta.usuarioEmail ?: email
+                    val gameCoins    = resposta.gameCoins    ?: 0
+                    val winRate      = resposta.winRate      ?: 0
+                    val rankNome     = resposta.rankNome     ?: "Recruta"
+
+                    // Passa todos os dados do usuário para a HomeActivity via Intent
+                    val intent = Intent(this@LoginActivity, HomeActivity::class.java).apply {
+                        putExtra("usuario_id",    usuarioId)
+                        putExtra("usuario_nome",  usuarioNome)
+                        putExtra("usuario_email", usuarioEmail)
+                        putExtra("game_coins",    gameCoins)
+                        putExtra("win_rate",      winRate)
+                        putExtra("rank_nome",     rankNome)
+                        // Limpa a pilha de activities para que o Back não volte ao Login
+                        flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    }
+                    startActivity(intent)
+                    finish()
                 }
 
                 override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
                     mostrarLoading(false)
-                    mostrarErro("Sem conexão com o servidor.\nVerifique o IP no RetrofitClient.")
+                    mostrarErro(
+                        "Sem conexão com o servidor.\n" +
+                        "Verifique o IP em RetrofitClient.kt e se o XAMPP está ativo."
+                    )
                 }
             })
     }
 
-    // ──────────────────────────────────────────
+    // ──────────────────────────────────────────────────
     // Helpers de UI
-    // ──────────────────────────────────────────
+    // ──────────────────────────────────────────────────
     private fun mostrarLoading(show: Boolean) {
         binding.progressBar.visibility = if (show) View.VISIBLE else View.GONE
         binding.btnEntrar.isEnabled    = !show
@@ -100,4 +125,4 @@ class LoginActivity : AppCompatActivity() {
     private fun esconderErro() {
         binding.tvErro.visibility = View.GONE
     }
-}
+}

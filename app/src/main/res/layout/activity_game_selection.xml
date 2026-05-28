@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/bg_main">
+
+    <!-- ══════════════════════════════════
+         CABEÇALHO
+    ══════════════════════════════════ -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:paddingTop="36dp"
+        android:paddingBottom="20dp"
+        android:paddingHorizontal="24dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="⚔ QUESTGEN"
+            android:textColor="@color/neon_blue"
+            android:textSize="28sp"
+            android:letterSpacing="0.15"
+            android:textStyle="bold"
+            android:fontFamily="sans-serif-condensed" />
+
+        <View
+            android:layout_width="110dp"
+            android:layout_height="2dp"
+            android:layout_marginTop="6dp"
+            android:background="@color/neon_blue"
+            android:alpha="0.6" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ESCOLHA SEU JOGO"
+            android:textColor="@color/text_secondary"
+            android:textSize="13sp"
+            android:letterSpacing="0.2"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp" />
+
+    </LinearLayout>
+
+    <!-- ══════════════════════════════════
+         LOADING INDICATOR
+    ══════════════════════════════════ -->
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="16dp"
+        android:visibility="gone"
+        android:indeterminateTint="@color/neon_blue" />
+
+    <!-- ══════════════════════════════════
+         MENSAGEM DE ERRO
+    ══════════════════════════════════ -->
+    <TextView
+        android:id="@+id/tvErro"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textColor="#FF6B6B"
+        android:textSize="14sp"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:paddingHorizontal="24dp"
+        android:visibility="gone" />
+
+    <!-- ══════════════════════════════════
+         LISTA DE JOGOS
+    ══════════════════════════════════ -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvJogos"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingVertical="8dp"
+        android:clipToPadding="false" />
+
+</LinearLayout>
