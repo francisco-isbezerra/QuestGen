@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_main"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <!-- ══════════════════════════════════
+             CABEÇALHO + BOTÃO VOLTAR
+        ══════════════════════════════════ -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="24dp">
+
+            <TextView
+                android:id="@+id/btnVoltar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="‹"
+                android:textColor="@color/neon_blue"
+                android:textSize="32sp"
+                android:textStyle="bold"
+                android:paddingEnd="12dp"
+                android:clickable="true"
+                android:focusable="true" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvNomeJogo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="NOME DO JOGO"
+                    android:textColor="@color/neon_blue"
+                    android:textSize="22sp"
+                    android:textStyle="bold"
+                    android:fontFamily="sans-serif-condensed"
+                    android:letterSpacing="0.1" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="DETALHES DA MISSÃO"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="11sp"
+                    android:letterSpacing="0.2"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- ══════════════════════════════════
+             CARD — CRONÔMETRO
+        ══════════════════════════════════ -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardBackgroundColor="#0A0A1E"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="8dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:padding="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="⏱  TEMPO RESTANTE"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="11sp"
+                    android:letterSpacing="0.15"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvCronometro"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="24:00:00"
+                    android:textColor="@color/neon_blue"
+                    android:textSize="48sp"
+                    android:textStyle="bold"
+                    android:fontFamily="sans-serif-condensed"
+                    android:letterSpacing="0.05"
+                    android:layout_marginTop="4dp" />
+
+                <TextView
+                    android:id="@+id/tvStatusDesafio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="NOVO DESAFIO"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/neon_green"
+                    android:letterSpacing="0.1"
+                    android:layout_marginTop="6dp" />
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <!-- ══════════════════════════════════
+             CARD — DETALHES DA MISSÃO
+        ══════════════════════════════════ -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardBackgroundColor="@color/bg_card"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="8dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <!-- Título da Missão -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="MISSÃO"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="11sp"
+                    android:letterSpacing="0.15"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvTituloDesafio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Carregando..."
+                    android:textColor="@color/text_primary"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="14dp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#1E1E1E"
+                    android:layout_marginBottom="14dp" />
+
+                <!-- Descrição -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="OBJETIVO"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="11sp"
+                    android:letterSpacing="0.15"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvDescricaoDesafio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="—"
+                    android:textColor="@color/text_primary"
+                    android:textSize="15sp"
+                    android:lineSpacingExtra="4dp"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginBottom="16dp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#1E1E1E"
+                    android:layout_marginBottom="14dp" />
+
+                <!-- Dificuldade (barrinhas) -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="DIFICULDADE"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="11sp"
+                    android:letterSpacing="0.15"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:id="@+id/layoutDificuldade"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="16dp">
+                    <!-- As 5 barrinhas são inseridas programaticamente -->
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#1E1E1E"
+                    android:layout_marginBottom="14dp" />
+
+                <!-- Recompensa -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="🏆  RECOMPENSA"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvRecompensa"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="— GC"
+                        android:textColor="@color/neon_gold"
+                        android:textSize="22sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- ══════════════════════════════════
+             LOADING
+        ══════════════════════════════════ -->
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center_horizontal"
+            android:visibility="gone"
+            android:indeterminateTint="@color/neon_blue"
+            android:layout_marginBottom="8dp" />
+
+        <!-- ══════════════════════════════════
+             MENSAGEM DE FEEDBACK
+        ══════════════════════════════════ -->
+        <TextView
+            android:id="@+id/tvMensagem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_marginBottom="12dp"
+            android:visibility="gone" />
+
+        <!-- ══════════════════════════════════
+             BOTÃO ACEITAR (visível quando status=null)
+        ══════════════════════════════════ -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnAceitar"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginBottom="12dp"
+            android:text="⚔  ACEITAR DESAFIO"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:letterSpacing="0.08"
+            app:backgroundTint="@color/neon_blue"
+            android:textColor="@color/bg_main"
+            app:cornerRadius="14dp"
+            app:rippleColor="#40FFFFFF"
+            android:visibility="gone" />
+
+        <!-- ══════════════════════════════════
+             BOTÃO REIVINDICAR (visível quando status=CONCLUIDO)
+        ══════════════════════════════════ -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnReivindicar"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginBottom="24dp"
+            android:text="🏆  REIVINDICAR RECOMPENSA"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:letterSpacing="0.08"
+            app:backgroundTint="@color/neon_green"
+            android:textColor="@color/bg_main"
+            app:cornerRadius="14dp"
+            app:rippleColor="#40FFFFFF"
+            android:visibility="gone" />
+
+    </LinearLayout>
+</ScrollView>

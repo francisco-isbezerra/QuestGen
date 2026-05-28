@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_marginTop="16dp"
-            android:layout_marginBottom="28dp"
+            android:layout_marginBottom="24dp"
             android:gravity="center">
 
             <TextView
@@ -39,6 +39,17 @@
                 android:layout_marginTop="6dp"
                 android:background="@color/neon_blue"
                 android:alpha="0.6" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="PAINEL DO JOGADOR"
+                android:textColor="@color/text_secondary"
+                android:textSize="11sp"
+                android:letterSpacing="0.2"
+                android:textStyle="bold"
+                android:layout_marginTop="8dp" />
+
         </LinearLayout>
 
         <!-- ══════════════════════════════════
@@ -47,7 +58,7 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="16dp"
             app:cardBackgroundColor="@color/bg_card"
             app:cardCornerRadius="16dp"
             app:cardElevation="8dp">
@@ -83,42 +94,100 @@
                     android:layout_marginVertical="14dp"
                     android:background="#1E1E1E" />
 
+                <!-- Linha: GameCoins + WinRate -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:gravity="center_vertical">
 
-                    <TextView
+                    <!-- GameCoins -->
+                    <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="💰  GAME COINS"
-                        android:textColor="@color/text_secondary"
-                        android:textSize="13sp"
-                        android:textStyle="bold" />
+                        android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/tvGameCoins"
-                        android:layout_width="wrap_content"
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="💰  GAME COINS"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="11sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tvGameCoins"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="—"
+                            android:textColor="@color/neon_green"
+                            android:textSize="22sp"
+                            android:textStyle="bold"
+                            android:layout_marginTop="2dp" />
+
+                    </LinearLayout>
+
+                    <!-- Divisor vertical -->
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="40dp"
+                        android:background="#1E1E1E"
+                        android:layout_marginHorizontal="16dp" />
+
+                    <!-- Rank -->
+                    <LinearLayout
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="0"
-                        android:textColor="@color/neon_green"
-                        android:textSize="22sp"
-                        android:textStyle="bold" />
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="🏅  RANK"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="11sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tvRankNome"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="—"
+                            android:textColor="@color/neon_gold"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:layout_marginTop="2dp" />
+
+                    </LinearLayout>
+
                 </LinearLayout>
+
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
         <!-- ══════════════════════════════════
-             BOTÃO — Gerar Desafio
+             LOADING — carregando dados do usuário
+        ══════════════════════════════════ -->
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:layout_gravity="center_horizontal"
+            android:visibility="gone"
+            android:indeterminateTint="@color/neon_blue"
+            android:layout_marginBottom="8dp" />
+
+        <!-- ══════════════════════════════════
+             BOTÃO — Escolher Jogo / Novo Desafio
         ══════════════════════════════════ -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnGerarDesafio"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:layout_marginBottom="24dp"
-            android:text="⚡  GERAR DESAFIO"
+            android:layout_marginBottom="20dp"
+            android:text="⚡  ESCOLHER JOGO"
             android:textSize="16sp"
             android:textStyle="bold"
             android:letterSpacing="0.08"
@@ -128,7 +197,7 @@
             app:rippleColor="#40FFFFFF" />
 
         <!-- ══════════════════════════════════
-             CARD — Desafio Sorteado (oculto inicialmente)
+             CARD — Desafio em Curso (oculto por padrão)
         ══════════════════════════════════ -->
         <androidx.cardview.widget.CardView
             android:id="@+id/cardDesafio"
@@ -145,41 +214,47 @@
                 android:orientation="vertical"
                 android:padding="22dp">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="DESAFIO GERADO"
-                    android:textColor="@color/text_secondary"
-                    android:textSize="11sp"
-                    android:letterSpacing="0.15"
-                    android:textStyle="bold" />
-
-                <!-- Raridade -->
+                <!-- Label + Status badge -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:layout_marginTop="10dp">
+                    android:gravity="center_vertical">
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="RARIDADE"
+                        android:text="DESAFIO EM CURSO"
                         android:textColor="@color/text_secondary"
-                        android:textSize="12sp"
+                        android:textSize="11sp"
+                        android:letterSpacing="0.15"
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/tvRaridade"
+                        android:id="@+id/tvStatusBadge"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="—"
-                        android:textSize="15sp"
+                        android:text="EM ANDAMENTO"
+                        android:textColor="@color/bg_main"
+                        android:textSize="10sp"
                         android:textStyle="bold"
-                        android:textColor="@color/neon_green" />
+                        android:paddingHorizontal="10dp"
+                        android:paddingVertical="4dp"
+                        android:background="#FFD700" />
+
                 </LinearLayout>
+
+                <!-- Título da missão -->
+                <TextView
+                    android:id="@+id/tvTituloDesafio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="—"
+                    android:textColor="@color/text_primary"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="10dp" />
 
                 <View
                     android:layout_width="match_parent"
@@ -191,7 +266,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="MISSÃO"
+                    android:text="OBJETIVO"
                     android:textColor="@color/text_secondary"
                     android:textSize="11sp"
                     android:letterSpacing="0.12"
@@ -203,9 +278,32 @@
                     android:layout_height="wrap_content"
                     android:text="—"
                     android:textColor="@color/text_primary"
-                    android:textSize="16sp"
+                    android:textSize="15sp"
                     android:lineSpacingExtra="4dp"
                     android:layout_marginTop="6dp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginVertical="14dp"
+                    android:background="#1E1E1E" />
+
+                <!-- Dificuldade (barrinhas geradas via código) -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="DIFICULDADE"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="11sp"
+                    android:letterSpacing="0.12"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:id="@+id/layoutDificuldade"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="8dp" />
 
                 <View
                     android:layout_width="match_parent"
@@ -233,27 +331,15 @@
                         android:id="@+id/tvRecompensa"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="0 coins"
-                        android:textColor="@color/neon_green"
-                        android:textSize="18sp"
+                        android:text="— GC"
+                        android:textColor="@color/neon_gold"
+                        android:textSize="20sp"
                         android:textStyle="bold" />
+
                 </LinearLayout>
+
             </LinearLayout>
         </androidx.cardview.widget.CardView>
-
-        <!-- ══════════════════════════════════
-             LOADING INDICATOR
-        ══════════════════════════════════ -->
-        <ProgressBar
-            android:id="@+id/progressBar"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="20dp"
-            android:visibility="gone"
-            android:indeterminateTint="@color/neon_blue"
-            android:layout_marginBottom="16dp"
-            android:layout_alignParentStart="true"/>
 
         <!-- ══════════════════════════════════
              MENSAGEM DE ERRO
@@ -265,6 +351,7 @@
             android:text=""
             android:textColor="#FF6B6B"
             android:textSize="14sp"
+            android:textStyle="bold"
             android:gravity="center"
             android:layout_marginTop="12dp"
             android:visibility="gone" />

@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_main"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="28dp"
+        android:gravity="center_horizontal">
+
+        <!-- ══════════════════════════════════
+             LOGO / TÍTULO
+        ══════════════════════════════════ -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_marginTop="48dp"
+            android:layout_marginBottom="40dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="⚔ QUESTGEN"
+                android:textColor="@color/neon_blue"
+                android:textSize="36sp"
+                android:letterSpacing="0.15"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-condensed" />
+
+            <View
+                android:layout_width="140dp"
+                android:layout_height="2dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/neon_blue"
+                android:alpha="0.6" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ENTRE NA ARENA"
+                android:textColor="@color/text_secondary"
+                android:textSize="13sp"
+                android:letterSpacing="0.2"
+                android:textStyle="bold"
+                android:layout_marginTop="12dp" />
+
+        </LinearLayout>
+
+        <!-- ══════════════════════════════════
+             CARD FORMULÁRIO DE LOGIN
+        ══════════════════════════════════ -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="@color/bg_card"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="12dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="24dp">
+
+                <!-- Label E-mail -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="E-MAIL"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="11sp"
+                    android:letterSpacing="0.15"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="6dp" />
+
+                <!-- Campo E-mail -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="18dp"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    app:boxStrokeColor="@color/neon_blue"
+                    app:boxBackgroundColor="#1A1A2E"
+                    app:hintTextColor="@color/text_secondary">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etEmail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="seu@email.com"
+                        android:textColor="@color/text_primary"
+                        android:textColorHint="@color/text_secondary"
+                        android:inputType="textEmailAddress"
+                        android:textSize="15sp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- Label Senha -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="SENHA"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="11sp"
+                    android:letterSpacing="0.15"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="6dp" />
+
+                <!-- Campo Senha -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="28dp"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    app:boxStrokeColor="@color/neon_blue"
+                    app:boxBackgroundColor="#1A1A2E"
+                    app:hintTextColor="@color/text_secondary"
+                    app:endIconMode="password_toggle"
+                    app:endIconTint="@color/neon_blue">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etSenha"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Sua senha"
+                        android:textColor="@color/text_primary"
+                        android:textColorHint="@color/text_secondary"
+                        android:inputType="textPassword"
+                        android:textSize="15sp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- Botão Entrar -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnEntrar"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:text="⚡  ENTRAR"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:letterSpacing="0.08"
+                    app:backgroundTint="@color/neon_blue"
+                    android:textColor="@color/bg_main"
+                    app:cornerRadius="14dp"
+                    app:rippleColor="#40FFFFFF" />
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- ══════════════════════════════════
+             LOADING INDICATOR
+        ══════════════════════════════════ -->
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="20dp"
+            android:visibility="gone"
+            android:indeterminateTint="@color/neon_blue" />
+
+        <!-- ══════════════════════════════════
+             MENSAGEM DE ERRO
+        ══════════════════════════════════ -->
+        <TextView
+            android:id="@+id/tvErro"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textColor="#FF6B6B"
+            android:textSize="14sp"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:layout_marginTop="12dp"
+            android:visibility="gone" />
+
+        <!-- Divisor -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#1E1E1E"
+            android:layout_marginVertical="28dp" />
+
+        <!-- ══════════════════════════════════
+             LINK: Cadastre-se
+        ══════════════════════════════════ -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="40dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Novo por aqui? "
+                android:textColor="@color/text_secondary"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tvCadastreSe"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cadastre-se aqui"
+                android:textColor="@color/neon_blue"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:paddingVertical="8dp"
+                android:clickable="true"
+                android:focusable="true" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

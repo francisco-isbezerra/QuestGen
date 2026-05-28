@@ -17,18 +17,40 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="28">
 
+        <!-- ══ PONTO DE ENTRADA DO APP ══ -->
         <activity
-            android:name=".HomeActivity"
-            android:exported="false" />
-
-        <activity
-            android:name=".MainActivity"
+            android:name=".LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- Cadastro -->
+        <activity
+            android:name=".CadastroActivity"
+            android:exported="false" />
+
+        <!-- Seleção de Jogo -->
+        <activity
+            android:name=".GameSelectionActivity"
+            android:exported="false" />
+
+        <!-- Detalhes do Desafio -->
+        <activity
+            android:name=".ChallengeDetailActivity"
+            android:exported="false" />
+
+        <!-- Home (tela principal pós-login) -->
+        <activity
+            android:name=".HomeActivity"
+            android:exported="false" />
+
+        <!-- MainActivity — mantida como fallback de navegação -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="false" />
 
     </application>
 
